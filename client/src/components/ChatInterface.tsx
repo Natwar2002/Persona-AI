@@ -6,6 +6,9 @@ import { ThemeToggle } from "./ThemeToggle";
 import { TypingIndicator } from "./TypingIndicator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import socket from "@/utils/socketConnection";
+import { Link } from "react-router-dom";
+import { FaXTwitter } from "react-icons/fa6";
+import { FiLinkedin } from "react-icons/fi";
 
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -13,6 +16,16 @@ export const ChatInterface = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const linkedinUrl =
+    currentExpert === "hitesh"
+      ? "https://www.linkedin.com/in/hiteshchoudhary/"
+      : "https://www.linkedin.com/in/piyushgarg195"; 
+
+  const xUrl =
+    currentExpert === "hitesh"
+      ? "https://x.com/Hiteshdotcom"
+      : "https://x.com/piyushgarg_dev";
 
   // Smooth auto-scroll function
   const scrollToBottom = useCallback(() => {
@@ -62,7 +75,6 @@ export const ChatInterface = () => {
 
   useEffect(() => {
     socket.on('MessageFromServer', (data) => {
-      console.log(data);
       setIsLoading(false);
       setMessages(prev => [...prev, { id: Date.now().toString(), content: data?.content, sender: data?.expert, timestamp: new Date() }])
     })
@@ -77,7 +89,7 @@ export const ChatInterface = () => {
     // Welcome message
     const welcomeMessage: Message = {
       id: "welcome",
-      content: "Hey there! I'm Hitesh Choudhary. I'm here to help you with JavaScript, web development, and programming concepts. What would you like to learn today?",
+      content: "Hanji! to kaise he aap? I'm Hitesh Choudhary. I'm here to help you with JavaScript, web development, and programming concepts. What would you like to learn today?",
       sender: "hitesh",
       timestamp: new Date()
     };
@@ -95,7 +107,24 @@ export const ChatInterface = () => {
           currentExpert={currentExpert} 
           onExpertChange={handleExpertChange}
         />
-        <ThemeToggle />
+        <div className="flex gap-2 items-center">
+          <Link
+            to={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FiLinkedin className="cursor-pointer transition-all duration-300 hover:scale-110 hover-glow" />
+          </Link>
+
+          <Link
+            to={xUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaXTwitter className="cursor-pointer transition-all duration-300 hover:scale-110 hover-glow" />
+          </Link>
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Chat Messages */}

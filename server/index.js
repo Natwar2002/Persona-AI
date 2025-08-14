@@ -17,11 +17,13 @@ io.on('connection', (socket, io) => {
     socket.on('MessageFromClient', async (data) => {
         try {
             let person = data.expert === "hitesh" ? Hitesh_Choudhary : Piyush_Garg;
+
             const response = await ExpertAI(person, data.content);
             const res = JSON.parse(response);
+
             socket.emit('MessageFromServer', {
                 expert: data?.expert,
-                content: res?.content
+                content: res?.response
             });
         } catch (error) {
             console.log(error);

@@ -1,5 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Expert } from "./ExpertToggle";
+import hiteshSir from "/hitesh_sir.jpg";
+import piyushSir from "/piyush_sir.jpg";
 
 interface TypingIndicatorProps {
   expert: Expert;
@@ -9,11 +11,11 @@ export const TypingIndicator = ({ expert }: TypingIndicatorProps) => {
   const expertInfo = {
     hitesh: {
       name: "Hitesh Choudhary",
-      avatar: "",
+      avatar: hiteshSir,
     },
     piyush: {
       name: "Piyush Garg", 
-      avatar: "",
+      avatar: piyushSir,
     }
   };
 

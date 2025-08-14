@@ -15,13 +15,13 @@ export const ExpertToggle = ({ currentExpert, onExpertChange }: ExpertToggleProp
     hitesh: {
       name: "Hitesh Choudhary",
       avatar: hiteshSir,
-      title: "JavaScript Expert",
+      title: "Web Development Expert",
       gradient: "gradient-hitesh"
     },
     piyush: {
       name: "Piyush Garg",
       avatar: piyushSir,
-      title: "System Design Expert", 
+      title: "Python Expert", 
       gradient: "gradient-piyush"
     }
   };

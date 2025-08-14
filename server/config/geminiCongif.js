@@ -6,29 +6,46 @@ const openai = new OpenAI({
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
+const conversationHistory = [
+    {
+        role: "system",
+        content: `
+            Rules:
+            1. Follow the strict JSON format for output
+            2. Output should contain only strings, no code syntax
+            Output Format:
+                { "content": "string" }
+        `,
+    },
+];
+
 export default async function ExpertAI(expert, message) {
     try {
+        if (expert) {
+            conversationHistory.push({
+                role: "system",
+                content: expert,
+            });
+        }
+
+        conversationHistory.push({
+            role: "user",
+            content: message,
+        });
+
         const response = await openai.chat.completions.create({
             model: 'gemini-2.0-flash',
             response_format: { type: 'json_object' },
-            messages: [
-                {
-                    role: "system",
-                    content: `
-                        Rules:
-                        1. Follow the strict JSON format for output
-                        2. output should contain only string no codes ( syntax )
-                        Output Format:
-                            { "content": "string" }
-                        ${expert}`,
-                },
-                {
-                    role: "user",
-                    content: message,
-                },
-            ],
+            messages: conversationHistory,
         });
-        return response.choices[0].message.content
+
+        const rawContent = response.choices[0].message.content;
+
+        conversationHistory.push({
+            role: 'assistant',
+            content: rawContent,
+        });
+        return rawContent;
     } catch (error) {
         console.log("Something is wrong in AI response " + error);
     }

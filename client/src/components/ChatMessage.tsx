@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Expert } from "./ExpertToggle";
 import hiteshSir from "/hitesh_sir.jpg";
 import piyushSir from "/piyush_sir.jpg";
-import socket from "@/utils/socketConnection";
 
 export interface Message {
   id: string;
