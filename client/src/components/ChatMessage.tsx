@@ -22,13 +22,13 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
     hitesh: {
       name: "Hitesh Choudhary",
       avatar: hiteshSir,
-      badge: "JS Expert",
+      badge: "JS Master",
       badgeColor: "bg-hitesh-primary"
     },
     piyush: {
       name: "Piyush Garg", 
       avatar: piyushSir,
-      badge: "System Design",
+      badge: "Python Pro",
       badgeColor: "bg-piyush-primary"
     }
   };
