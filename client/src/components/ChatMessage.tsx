@@ -8,7 +8,7 @@ export interface Message {
   id: string;
   content: string;
   sender: "user" | Expert;
-  timestamp: Date;
+  timestamp: Date | string;
 }
 
 interface ChatMessageProps {
@@ -67,7 +67,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         </div>
         
         <span className="text-xs text-muted-foreground mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          { typeof message?.timestamp == 'string' ? message?.timestamp : message?.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
         </span>
       </div>
       

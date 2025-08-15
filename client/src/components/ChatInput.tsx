@@ -6,10 +6,9 @@ import { Send, Loader2 } from "lucide-react";
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   isLoading?: boolean;
-  currentExpert: string;
 }
 
-export const ChatInput = ({ onSendMessage, isLoading = false, currentExpert }: ChatInputProps) => {
+export const ChatInput = ({ onSendMessage, isLoading = false }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 

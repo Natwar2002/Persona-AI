@@ -9,6 +9,7 @@ import socket from "@/utils/socketConnection";
 import { Link } from "react-router-dom";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiLinkedin } from "react-icons/fi";
+import { Trash2 } from "lucide-react";
 
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -76,7 +77,7 @@ export const ChatInterface = () => {
   useEffect(() => {
     socket.on('MessageFromServer', (data) => {
       setIsLoading(false);
-      setMessages(prev => [...prev, { id: Date.now().toString(), content: data?.content, sender: data?.expert, timestamp: new Date() }])
+      setMessages(prev => [...prev, { id: Date.now().toString(), content: data?.content, sender: data?.expert, timestamp: new Date() }]);
     })
   }, []);
 
@@ -89,11 +90,23 @@ export const ChatInterface = () => {
     // Welcome message
     const welcomeMessage: Message = {
       id: "welcome",
-      content: "Hanji! to kaise he aap? I'm Hitesh Choudhary. I'm here to help you with JavaScript, web development, and programming concepts. What would you like to learn today?",
+      content: "Hanji! to kaise he aap? I'm Hitesh Choudhary-an AI assistant, Kaise madad kar sakta hu aapki?",
       sender: "hitesh",
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
+  }, []);
+
+  useEffect(() => {
+    if(messages.length != 0) {
+      localStorage.removeItem("chat");
+      localStorage.setItem('chat', JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    const msgs = JSON.parse(localStorage.getItem("chat") || "[]");
+    setMessages(msgs);
   }, []);
 
   return (
@@ -127,10 +140,23 @@ export const ChatInterface = () => {
         </div>
       </div>
 
+      <div className="w-full">
+        <button 
+          className="flex gap-2 text-red-500 m-3 hover:bg-red-500 hover:text-white p-2 rounded-lg"
+          onClick={() => {
+            localStorage.removeItem("chat");
+            setMessages([]);
+          }}
+        >
+          <Trash2 />
+          <span>Clear Chat</span>
+        </button>
+      </div>
+
       {/* Chat Messages */}
       <ScrollArea className="flex-1" ref={scrollAreaRef}>
         <div className="max-w-4xl mx-auto space-y-2 pb-4">
-          {messages.map((message) => (
+          { messages && messages?.map((message) => (
             <ChatMessage key={message.id} message={message} />
           ))}
           {isLoading && (
@@ -143,7 +169,7 @@ export const ChatInterface = () => {
 
       {/* Chat Input */}
       <div className="w-full flex justify-center">
-        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} currentExpert={currentExpert}  />
+        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </div>
     </div>
   );
