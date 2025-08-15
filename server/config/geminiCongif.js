@@ -34,7 +34,7 @@ export default async function ExpertAI(expert, message) {
         });
 
         const response = await openai.chat.completions.create({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-2.5-pro',
             response_format: { type: 'json_object' },
             messages: conversationHistory,
         });
